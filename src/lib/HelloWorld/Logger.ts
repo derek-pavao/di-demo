@@ -2,7 +2,6 @@ import { singleton } from "tsyringe";
 
 @singleton()
 export class Logger {
-
   public info(msg: string): void {
     console.info(msg);
   }

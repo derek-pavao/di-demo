@@ -13,8 +13,7 @@ export class SubscriptionManager {
   }
 
   public async listSubscriptions(parentId: string) {
-
-    await this.eventClient.publish({ event: "publish.this.event", body: { foo: 'bar' } });
+    await this.eventClient.publish({ event: "publish.this.event", body: { foo: "bar" } });
     return this.subscriptionStore.list(parentId);
   }
 }

@@ -5,10 +5,7 @@ import { on, rpcHandler } from "../../RpcHandler";
 
 @rpcHandler()
 export class HelloWorld {
-  constructor(
-    private greeter: Greeter,
-    private walmartGreeter: WalmartGreeter
-  ) {}
+  constructor(private greeter: Greeter, private walmartGreeter: WalmartGreeter) {}
 
   @on("demo.generic.welcome", [{ token: "config.lng", useValue: "en" }])
   public sayHelloWorld(params, ctx) {

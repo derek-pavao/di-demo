@@ -13,8 +13,8 @@
     "start:dev": "AWS_ASSUME_ROLE=$npm_package_config_role_dev npm start",
     "tscw": "tsc -w",
     "watch": "nodemon --watch './build/**/*' --delay 2 --inspect=7777 ./build/index.js",
-    "format:check": "prettier --check",
-    "format:fix": "prettier --fix"
+    "format:check": "prettier --check './src/**/*.{ts,js,json,md}'",
+    "format:fix": "prettier --write './src/**/*.{ts,js,json,md}'"
   },
   "author": "",
   "license": "ISC",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "jest": "^26.4.1",
     "nodemon": "^2.0.4",
+    "prettier": "^2.0.5",
     "ts-jest": "^26.2.0"
   }
 }
