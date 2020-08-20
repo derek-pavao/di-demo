@@ -1,3 +1,3 @@
 export { on } from './decorators/on';
-export { dependencies } from './decorators/dependencies';
-export { attach } from './attach';
+export { bootstrap } from './bootstrap';
+export { rpcHandler } from './decorators/rpcHandler';

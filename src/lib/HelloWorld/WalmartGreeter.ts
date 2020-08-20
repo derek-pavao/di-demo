@@ -6,7 +6,6 @@ export class WalmartGreeter {
   constructor(
     private logger: Logger,
     @inject("config.lng") private lng: string,
-    @inject("child.dep") private childDep: string,
     @inject('req_params') private params: any
   ) {}
 
