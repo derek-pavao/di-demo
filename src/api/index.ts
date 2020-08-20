@@ -1,3 +1,4 @@
+import { SubscriptionStore } from "../client/SubscriptionStore";
 import { awsSecretClient } from "@isubscribed/wiseguy/secretClient/aws";
 import sourceMapSupport from "source-map-support";
 sourceMapSupport.install();
@@ -6,6 +7,7 @@ import makeDynamoNestedDocumentStore from "@isubscribed/wiseguy/documentStore/dy
 import makePlatformApiClient from "@isubscribed/wiseguy/platformApiClient";
 import { makeConfigProviders } from "../config";
 import { bootstrap } from "../RpcHandler";
+import { PlatformApiClient } from "../wiseguyProviders";
 import { HelloWorld } from "./HelloWorld";
 import { Subscription } from "./Subscription";
 import { dynamoConfig } from "./Subscription/dynamoConfig";
@@ -20,30 +22,28 @@ const attach = bootstrap(app, {
       useFactory: () => process.env.LNG || "es",
     },
     {
-      token: "PlatformApiClient",
-      useFactory: (c) => {
-        return makePlatformApiClient({
+      token: PlatformApiClient,
+      useFactory: (c) =>
+        makePlatformApiClient({
           baseUrl: `https://${c.resolve("api_domain")}/`,
           credentials: async () => {
             const colonDelimited = await awsSecretClient.getSecret(c.resolve("platform_api_key_secret"));
             const [api_key, secret] = colonDelimited.split(":");
             return { api_key, secret };
           },
-        });
-      },
+        }),
     },
     {
-      token: "DynamoSubscriptionStore",
-      useFactory: (c) => {
-        return makeDynamoNestedDocumentStore({
+      token: SubscriptionStore,
+      useFactory: (c) =>
+        makeDynamoNestedDocumentStore({
           type: "Subscription",
           typePrefix: "subscription_v1",
           parentIdAttribute: "user_id",
           idAttribute: "name",
           indexNames: ["zuora_id", "parent_user_id_parent_subscription"],
           dynamoConfig: { ...dynamoConfig(c.resolve("subscription_table")) },
-        });
-      },
+        }),
     },
   ],
 });

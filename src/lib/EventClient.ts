@@ -1,11 +1,11 @@
 import { inject, injectable } from "tsyringe";
+import { PlatformApiClient } from "../wiseguyProviders";
 import { EventAgent } from "./EventAgent";
-import { ApiClient } from "@isubscribed/wiseguy/platformApiClient";
 
 @injectable()
 export class EventClient {
   constructor(
-    @inject("PlatformApiClient") private apiClient: ApiClient,
+    private apiClient: PlatformApiClient,
     @inject("event_channel") private eventChannel: string,
     private agent: EventAgent
   ) {}
@@ -23,7 +23,7 @@ export class EventClient {
 
     try {
       console.log("PUBLISH THIS EVENT", event);
-      // await this.apiClient('event.channel.publish', event)
+      await this.apiClient("event.channel.publish", event);
     } catch (err) {
       console.error("could not publish the event", err);
     }
