@@ -7,7 +7,7 @@ export class SubscriptionManager {
   constructor(private subscriptionStore: SubscriptionStore, private eventClient: EventClient) {}
 
   public async listSubscriptions(parentId: string) {
-    await this.eventClient.publish({ event: "publish.this.event", body: { foo: "bar" } });
+    await this.eventClient.publish({ type: "publish.this.event", body: { foo: "bar" } });
 
     return this.subscriptionStore.list(parentId);
   }

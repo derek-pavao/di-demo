@@ -9,7 +9,9 @@
   "scripts": {
     "test": "jest",
     "build": "tsc",
-    "start": "run-p tscw watch",
+    "old:start": "run-p tscw watch",
+    "start": "run-p watch:*",
+    "watch:api-server": "ts-node-dev --respawn --transpile-only --inspect=7777 ./src/api/server",
     "start:dev": "AWS_ASSUME_ROLE=$npm_package_config_role_dev npm start",
     "tscw": "tsc -w",
     "watch": "nodemon --watch './build/**/*' --delay 2 --inspect=7777 ./build/index.js",
@@ -28,8 +30,8 @@
   },
   "devDependencies": {
     "jest": "^26.4.1",
-    "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
-    "ts-jest": "^26.2.0"
+    "ts-jest": "^26.2.0",
+    "ts-node-dev": "^1.0.0-pre.62"
   }
 }

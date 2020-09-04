@@ -18,12 +18,12 @@ export class EventClient {
       ...eventData,
       channel: this.eventChannel,
       occurred_at: new Date().toISOString(),
-      body,
+      body
     };
 
     try {
       console.log("PUBLISH THIS EVENT", event);
-      await this.apiClient("event.channel.publish", event);
+      // await this.apiClient("event.channel.publish", event);
     } catch (err) {
       console.error("could not publish the event", err);
     }

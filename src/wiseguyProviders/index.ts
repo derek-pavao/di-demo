@@ -1,9 +1,11 @@
 import { DocumentMeta } from "@isubscribed/wiseguy/documentStore/meta";
-import makePlatformApiClient from "@isubscribed/wiseguy/platformApiClient";
-import makeDynamoNestedDocumentStore, { Opts } from "@isubscribed/wiseguy/documentStore/dynamo/nested";
 import { NestedDocumentStore as INestedDocumentStore, ReadOptions } from "@isubscribed/wiseguy/documentStore/nested";
-import { awsSecretClient } from "@isubscribed/wiseguy/secretClient/aws";
+import { PageContinuation, PaginationOptions } from "@isubscribed/wiseguy/dynamoClient/pagination";
 import { ApiClient } from "@isubscribed/wiseguy/platformApiClient";
+import {
+  PaginationReadOptions,
+  SimpleDocumentStore as ISimpleDocumentStore
+} from "@isubscribed/wiseguy/documentStore/simple";
 
 interface PlatformApiClient extends ApiClient {}
 class PlatformApiClient implements ApiClient {}
@@ -42,4 +44,57 @@ class NestedDocumentStore<T> implements INestedDocumentStore<T> {
   }
 }
 
-export { PlatformApiClient, NestedDocumentStore };
+class SimpleDocumentStore<T> implements ISimpleDocumentStore<T> {
+  public create(e: T): Promise<T & DocumentMeta> {
+    return Promise.resolve(undefined);
+  }
+
+  public delete(id: string): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
+  public deletePermanently(id: string): Promise<void> {
+    return Promise.resolve(undefined);
+  }
+
+  public get(id: string, options?: ReadOptions): Promise<T & DocumentMeta> {
+    return Promise.resolve(undefined);
+  }
+
+  public getMany(ids: string[], options?: ReadOptions): Promise<(T & DocumentMeta)[]> {
+    return Promise.resolve([]);
+  }
+
+  public list(options?: ReadOptions): Promise<(T & DocumentMeta)[]> {
+    return Promise.resolve([]);
+  }
+
+  public listPage(
+    pagination: PaginationOptions,
+    options?: PaginationReadOptions
+  ): Promise<{ items: (T & DocumentMeta)[]; continuation: PageContinuation }> {
+    return Promise.resolve({ continuation: undefined, items: [] });
+  }
+
+  public query(e: Partial<T>, options?: ReadOptions): Promise<(T & DocumentMeta)[]> {
+    return Promise.resolve([]);
+  }
+
+  public queryPage(
+    e: Partial<T>,
+    pagination: PaginationOptions,
+    options?: PaginationReadOptions
+  ): Promise<{ items: (T & DocumentMeta)[]; continuation: PageContinuation }> {
+    return Promise.resolve({ continuation: undefined, items: [] });
+  }
+
+  public undelete(id: string): Promise<T & DocumentMeta> {
+    return Promise.resolve(undefined);
+  }
+
+  public update(e: Partial<T>): Promise<T & DocumentMeta> {
+    return Promise.resolve(undefined);
+  }
+}
+
+export { PlatformApiClient, NestedDocumentStore, SimpleDocumentStore };
